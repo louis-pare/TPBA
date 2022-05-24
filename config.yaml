@@ -1,0 +1,15 @@
+# Path to the transcriptome to be annotated
+transcriptome: "Path_To_Transcriptome"
+
+# Path to the folder containing the proteomes
+proteomes: "Path_To_Proteome_Directory"
+
+
+# Path to output directory
+output_directory: "Path_To_Output"
+
+# Number of threads
+threads: 12
+
+# Evalue cutoff in blast
+evalue: "1e-10"
