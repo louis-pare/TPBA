@@ -4,6 +4,7 @@ configfile: "config.yaml"
 
 config["output_directory"] = verify_output_directory(config["output_directory"])
 proteome_list = os.listdir(config["proteomes"])
+blast_to_use = "blastx" if config["is_transcriptome"] == "yes" else "blastp"
 
 #
 rule all:
@@ -32,10 +33,11 @@ rule blastx:
     threads:
         config["threads"]
     params:
-        cutoff = config["evalue"]
+        cutoff = config["evalue"],
+        blast_to_use = blast_to_use
     shell:
         """
-        blastx -query {input.transcriptome} -db {input.proteomes} \\
+        {params.blast_to_use} -query {input.transcriptome} -db {input.proteomes} \\
         -num_threads {threads} -max_hsps 1 -outfmt \"6 std stitle\" \\
         -evalue {params.cutoff} > {output}
         """
@@ -59,15 +61,15 @@ rule transcript_to_annotation:
     # bash script/trans_to_ann.sh {input.trans_list} {input.blast} {output}
         """
         cat {input.blast} | cut -f1,13 | sort -u -k1,1 > {output}
-        cat {output} | cut -f1 > tmp.txt
-        res=$( cat  tmp.txt {input.trans_list} | sort | uniq -u )
+        cat {output} | cut -f1 > {output}tmp.txt
+        res=$( cat  {output}tmp.txt {input.trans_list} | sort | uniq -u )
         for i in $res; do
-            echo -e "$i"\tnone >> {output}
+            echo -e "${i}\tnone" >> {output}
         done
-        rm tmp.txt
+        rm {output}tmp.txt
         """
 
-rule over:
+rule compute_statistics:
     input:
         expand(config["output_directory"] + "{proteome_list}_transcript_to_annotation.txt", proteome_list = proteome_list)
     output:
