@@ -1,15 +1,19 @@
-# Path to the transcriptome to be annotated
-transcriptome: "Path_To_Transcriptome"
+# Path to the transcriptome to be annotated (can also be a proteome if is_transcriptome=no is given)
+transcriptome: "/shared/projects/de_novo_transcriptome_platynereis_dumerili/Louis/TBT/input/Collapsed_collection.fasta"
 
 # Path to the folder containing the proteomes
-proteomes: "Path_To_Proteome_Directory"
+proteomes: "/shared/projects/de_novo_transcriptome_platynereis_dumerili/Louis/TBT/proteome"
 
 
 # Path to output directory
-output_directory: "Path_To_Output"
+output_directory: "Stem_cells_output_hsap"
 
 # Number of threads
 threads: 12
 
 # Evalue cutoff in blast
 evalue: "1e-10"
+
+# If yes, consider the "transcriptome" parameter correspond to a transcritome
+# Else, consider it to be a proteome.
+is_transcriptome: "no"

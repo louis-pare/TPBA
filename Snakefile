@@ -62,9 +62,9 @@ rule transcript_to_annotation:
         """
         cat {input.blast} | cut -f1,13 | sort -u -k1,1 > {output}
         cat {output} | cut -f1 > {output}tmp.txt
-        res=$( cat  {output}tmp.txt {input.trans_list} | sort | uniq -u )
+        res=$( cat {output}tmp.txt {input.trans_list} | sort | uniq -u )
         for i in $res; do
-            echo -e "${i}\tnone" >> {output}
+            echo -e "${{i}}\tnone" >> {output}
         done
         rm {output}tmp.txt
         """
