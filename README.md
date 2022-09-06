@@ -2,7 +2,7 @@
 
 ## What is it?
 
-This snakemake pipeline take as input either a transcriptome or a proteome and a list of proteomes to find homologuous proteins using blast.
+This snakemake pipeline is a wrapper around blast which will generate file correspondance between a list of transcript or protein and some proteomes.
 
 ## How to make it work?
 
